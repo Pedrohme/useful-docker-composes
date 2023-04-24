@@ -2,13 +2,23 @@ version: '3.8'
 
 services:
   cache:
-    image: redis:7n-alpine
+    image: redis:7-alpine
     restart: always
     ports:
       - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass 123
+    command: redis-server --save 20 1 --loglevel warning --requirepass "123"
     volumes: 
       - redis:/data
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: unless-stopped
+    environment:
+    - REDIS_HOSTS=local:cache:6379:0:123
+    ports:
+    - "6378:8081"  
 
 volumes:
   redis:
