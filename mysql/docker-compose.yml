@@ -4,13 +4,13 @@ services:
   db:
     container_name: mysql-dev
     image: mysql:latest
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=123
     ports:
       - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
-    restart: unless-stopped
 
 volumes:
   mysql:
